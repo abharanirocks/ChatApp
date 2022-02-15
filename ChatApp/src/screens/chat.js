@@ -46,7 +46,7 @@ export default function Chat() {
           // }}
         />*/}
       <View>
-      <ChatMessage/>
+      <ChatMessage title="green apple" message={params}/>
       </View>
    
     </View>

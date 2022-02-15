@@ -118,7 +118,6 @@ export default function OnlineUser() {
           <View style={styled.midContainer} >
             <Text style={styled.username} onPress={
               ()=>{
-                console.warn(`clicked on ${item.id}`)
                 console.log('------------------------------',item.userName)
                 navigation.navigate('Chat', {id:item.id, user:item.userName,})
             }}>{item.userName}</Text>

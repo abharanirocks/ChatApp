@@ -7,7 +7,6 @@ import Chat from '../screens/chat';
 
 const Stack = createNativeStackNavigator();
 const Navigation = () => {
-    console.log("navigation is here")
     
     return (
         <NavigationContainer>
