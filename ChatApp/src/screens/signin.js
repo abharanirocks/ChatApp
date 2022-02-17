@@ -6,7 +6,6 @@ import { useNavigation } from '@react-navigation/native';
 
 const SignIn = () => {
     const navigation = useNavigation();
-    console.log("signin")
     const [username, setUsername]= useState('');
     const [password, setPassword]= useState('');
 

@@ -64,6 +64,60 @@ export const data = {
 		user: {
 			id: 'u1',
 			name: 'Vadim',
+		}
+	}, {
+		id: 'm8',
+		content: 'Browse to the directory in the repository',
+		createdAt: '2020-10-03T14:53:00.000Z',
+		user: {
+			id: 'u1',
+			name: 'Vadim',
 		},
-	}]
+	},
+	{
+		id: 'm9',
+		content: 'choose to either commit the change directly',
+		createdAt: '2020-10-03T14:53:00.000Z',
+		user: {
+			id: 'u2',
+			name: 'Luckas',
+		},
+	},
+	{
+		id: 'm10',
+		content: 'Declarative views make your code more predictable and easier to debug.........',
+		createdAt: '2020-08-03T14:53:00.000Z',
+		user: {
+			id: 'u2',
+			name: 'Luckas',
+		},
+	},
+	{
+		id: 'm11',
+		content: 'I have a Flat list implementation that is imported from react-native',
+		createdAt: '2020-08-03T14:53:00.000Z',
+		user: {
+			id: 'u1',
+			name: 'Luckas',
+		},
+	},
+	{
+		id: 'm12',
+		content: 'Due to advances in technology, robotic arms powered by machine learning and AI are increasingly able to handle warehouse tasks typically performed by people, such as sorting apparel and packing supplies.',
+		createdAt: '2020-08-03T14:53:00.000Z',
+		user: {
+			id: 'u1',
+			name: 'Luckas',
+		},
+	},
+	{
+		id: 'm13',
+		content: ' Boxes piling up at front doors in neighborhoods all over the world illustrate a surge in home deliveries during the COVID-19 pandemic. To keep parcels moving amid a tight labor market and supply chain crunch, warehouses need more robots—and more cutting-edge, efficient ones, too. ',
+		createdAt: '2020-08-03T14:53:00.000Z',
+		user: {
+			id: 'u1',
+			name: 'Luckas',
+		},
+	},
+	]
 }

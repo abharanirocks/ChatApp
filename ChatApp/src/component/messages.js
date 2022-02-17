@@ -1,5 +1,5 @@
 import React,{useState} from 'react'
-import { View, Text, StyleSheet, FlatList } from 'react-native'
+import { View, Text, StyleSheet, FlatList, } from 'react-native'
 import { useNavigation } from '@react-navigation/native';
 import moment from 'moment';
 import {data} from '../data/data'
@@ -13,11 +13,13 @@ const ChatMessage = (title,message) => {
 //  
     return (
         <View>
+
        <FlatList 
           style={{width:'100%'}}
           data={data.messages}
           keyExtractor={item=>item.id}
           inverted
+           showsVerticalScrollIndicator={false}
           renderItem={({item}) => (
             <View style={styles.container}>
             <View style={
@@ -42,11 +44,12 @@ const ChatMessage = (title,message) => {
 const styles = StyleSheet.create({
   container: {
     padding:10,
-    
+     
   },
   messageBox:{
     borderRadius:10,
     padding:10,
+
   },
   name:{
     color:'#0650A9',

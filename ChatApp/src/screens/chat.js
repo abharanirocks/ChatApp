@@ -1,11 +1,13 @@
 import React, { useState,useEffect,useRef} from "react";
 import PropTypes from 'prop-types';
-import { StyleSheet, Text, View, TextInput,FlatList } from 'react-native';
+import { StyleSheet, Text, View, TextInput,FlatList,TouchableOpacity } from 'react-native';
+import {KeyboardAwareScrollView} from 'react-native-keyboard-aware-scroll-view';
 import {useRoute} from '@react-navigation/native';
 
 import {io} from "socket.io-client";
 import ChatMessage from '../component/messages';
 import {data} from '../data/data'
+import InputMsg from '../component/inputMsg';
 
 
 
@@ -31,10 +33,13 @@ export default function Chat() {
   }
     
   return (
-    <View style={styles.container}>
-      <Text style={styles.user}>{JSON.stringify(user)}</Text>
+    
+    <View 
+       style={styles.container}>
+
+      <Text style={styles.text}>{JSON.stringify(user)}</Text>
       <Text style={styles.user}>{JSON.stringify(id)}</Text>
-    <Text style={styles.text}>Chat Application!</Text>
+    <Text style={styles.user}>Chat Application!</Text>
         {/*<TextInput
           style={styles.textinput}
           autoCorrect={false}
@@ -45,10 +50,14 @@ export default function Chat() {
           //   {setChat};
           // }}
         />*/}
-      <View>
+      <View style={{flex: 1}}>
       <ChatMessage title="green apple" message={params}/>
       </View>
+  
+      <InputMsg/>
    
+   
+   {/* </View>*/}
     </View>
   );
 }
@@ -56,7 +65,8 @@ export default function Chat() {
 const styles = StyleSheet.create({
   container: {
     
-    padding:75,
+    marginTop:30,
+    padding:20,
     flex: 1,
     backgroundColor: '#fff',
     
@@ -74,7 +84,7 @@ const styles = StyleSheet.create({
     
   },
   user:{
-    fontSize:20,
+    fontSize:10,
     
   }
 });
