@@ -1,8 +1,20 @@
-import React,{useState} from 'react'
+import React,{useState,useRef,useEffect} from 'react'
 import { View, ScrollView,Image, StyleSheet, useWindowDimensions } from 'react-native'
+import {io} from "socket.io-client";
 import CustomInput from '../component/custominput';
 import CustomButton from '../component/custombutton';
 import { useNavigation } from '@react-navigation/native';
+
+    export const socket =io("http://192.168.43.81:3001");
+ 
+
+    //    export const initSocket =(room)=>{
+    //     const socketRef = useRef();
+    // socketRef.current=io("http://192.168.43.81:3001");
+    // socketRef.current.on('message',message=>{
+    //     console.log(message)
+    // })
+    // }
 
 const SignIn = () => {
     const navigation = useNavigation();
@@ -10,6 +22,23 @@ const SignIn = () => {
     const [password, setPassword]= useState('');
 
     const {height} = useWindowDimensions();
+
+
+
+    // const socketRef = useRef();
+    // socketRef.current = io("http://192.168.43.81:3001");
+    // socketRef.current.on('message',message=>{
+    //     console.log(message)
+    // })
+    useEffect(()=>{
+     socket.on('message',(message: string)=>{
+        console.log("sign in msg to user:",message)
+    })   
+    })
+       
+    // const childRef = useRef(null)
+    // console.log(childRef.current)
+
     
 
     const onSignInPressed=async()=>{
@@ -32,8 +61,6 @@ const SignIn = () => {
         setValue={setPassword}
         />
         <CustomButton text={"Enter Room"} onPress={onSignInPressed}/>
-    
-        {/* <SocialSigninButton/> */}
 
         </View>
         </ScrollView>

@@ -6,8 +6,11 @@ import {useRoute} from '@react-navigation/native';
 
 import {io} from "socket.io-client";
 import ChatMessage from '../component/messages';
+import { FontAwesome } from '@expo/vector-icons';
 import {data} from '../data/data'
-import InputMsg from '../component/inputMsg';
+import CustomInput from '../component/custominput'; 
+import SignIn from './signin';
+import {socket} from './signin'
 
 
 
@@ -20,17 +23,32 @@ export default function Chat() {
  const params= route.params
    const { id, user } = route.params;
   const [chat,setChat] = useState({message:""});
-  const [messages, setMessage] = useState();
+  const [message, setMessage] = useState();
 
-  
+// socketRef.current.on('message',message=>{
+//         console.log(message)
+//     })
 
-  const submitChatMessage= ()=>{
+  const onSend=()=>{
+    socket.emit('chatMessage',(message))   
     
-    const {messages} =chat;
-    socketRef.current.emit('send-message', messages=>  console.log(messages));
+    console.log(message,"Sendddddddd...........")
 
-    console.log("submit")
-  }
+    //     const socketRef = useRef();
+    // socketRef.current = io("http://192.168.43.81:3001");
+    // socketRef.current.on('chatMessage',message=>{
+    //     console.log(message)
+    // })
+    setMessage('')
+   } 
+
+  // const submitChatMessage= ()=>{
+    
+  //   const {messages} =chat;
+  //   socketRef.current.emit('send-message', messages=>  console.log(messages));
+
+  //   console.log("submit")
+  // }
     
   return (
     
@@ -51,10 +69,21 @@ export default function Chat() {
           // }}
         />*/}
       <View style={{flex: 1}}>
-      <ChatMessage title="green apple" message={params}/>
+      {/*<ChatMessage title="green apple" message={params}/>*/}
+      <ChatMessage title="user1" message={message}/>
       </View>
   
-      <InputMsg/>
+      <View style={styles.inputContainer}>
+          <View style={styles.inputBox}>
+          <CustomInput placeholder="Type a Message" type="SECONDARY" value={message} setValue={setMessage} />
+          </View>
+          <TouchableOpacity style={styles.send} onPress={onSend}>
+          
+          {/*<Feather name="send" size={23} color="blue" />*/}
+          <FontAwesome name="send" size={29} color="#1A91E1" />
+          </TouchableOpacity>
+          
+          </View>
    
    
    {/* </View>*/}
@@ -86,5 +115,25 @@ const styles = StyleSheet.create({
   user:{
     fontSize:10,
     
-  }
+  },
+  inputContainer:{
+        padding:4,
+        flexDirection:"row",
+        height:"6%",
+    },
+    inputBox:{
+        flex:1,
+        height:"100%",
+        // bottom:   'keyboardOffset',
+        // backgroundColor:"pink"
+
+    },
+    send:{
+        height:"100%",
+        // backgroundColor:'orange',
+        marginTop:'1%',
+        alignItems:'center',
+        justifyContent:'center',
+        padding:5,
+    }
 });

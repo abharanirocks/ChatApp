@@ -48,7 +48,7 @@ export const Messages = [
 export default function OnlineUser() {
 
   const navigation = useNavigation();
-  const onChatPressed=async()=>{
+  const onChatPressed=()=>{
         console.log("online users screen")
         navigation.navigate('Chat');
     
@@ -59,12 +59,6 @@ export default function OnlineUser() {
   // const socketRef = useRef();
   // socketRef.current = io("http://192.168.43.81:3001");
   
-  const submitChatMessage= ()=>{
-    
-    const {messages} =chat;
-    socketRef.current.emit('send-message', messages);
-    console.log("suubmit")
-  }
     
   return (
     <View style={styles.container}>

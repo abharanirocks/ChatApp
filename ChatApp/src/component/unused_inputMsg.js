@@ -8,7 +8,7 @@ import moment from 'moment';
 import {data} from '../data/data';
 import CustomInput from './custominput';
 
-const InputMsg = (messages1,setMessages1) => {
+const InputMsg = () => {
  
  const [message, setMessage] = useState();   
    const onSend=()=>{
