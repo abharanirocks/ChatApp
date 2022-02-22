@@ -5,6 +5,8 @@ import { StyleSheet, Text, View, TextInput,SafeAreaView } from 'react-native';
 import SignInScreen from './src/screens/signin';
 import Navigation from './src/Navigation';
 
+
+
 export default function App() {
 
   

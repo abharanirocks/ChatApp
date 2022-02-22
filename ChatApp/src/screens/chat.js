@@ -19,7 +19,7 @@ export default function Chat() {
 
 
   const route = useRoute();
-  console.log(route.params)
+  console.log("chat screen params",route.params)
  const params= route.params
    const { id, user } = route.params;
   const [chat,setChat] = useState({message:""});
@@ -33,6 +33,7 @@ export default function Chat() {
     socket.emit('chatMessage',(message))   
     
     console.log(message,"Sendddddddd...........")
+    console.warn(user,' : ',message,)
 
     //     const socketRef = useRef();
     // socketRef.current = io("http://192.168.43.81:3001");
@@ -55,8 +56,8 @@ export default function Chat() {
     <View 
        style={styles.container}>
 
-      <Text style={styles.text}>{JSON.stringify(user)}</Text>
-      <Text style={styles.user}>{JSON.stringify(id)}</Text>
+      <Text style={styles.text}>{user}</Text>
+      <Text style={styles.user}>{id}</Text>
     <Text style={styles.user}>Chat Application!</Text>
         {/*<TextInput
           style={styles.textinput}

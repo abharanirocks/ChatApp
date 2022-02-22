@@ -2,40 +2,75 @@ const express = require('express');
 const app = express();
 const server = require("http").createServer(app);
 const io = require("socket.io")(server);
-const {userJoin,getCurrentUser,userLeave, getRoomUsers} = require('./users');
+const {userJoinRoom,
+userJoinMatch, getCurrentOnlineUser,getCurrentMatchUser, userLeaveRoom,
+userLeaveMatch, getRoomUsers, getMatchUsers,} = require('./users');
 const port = 3001;
+const formatMessage = require('./messages')
+const botName= 'Bot_Testing';
+
 
 
 io.on("connection", socket =>{
 	console.log(socket.id,"New connection");
+	const socketid = socket.id
+	socket.on('joinRoom',({mainUser,socketid,room})=>{
+		console.log(socketid)
+		const user = userJoinRoom(mainUser,socketid,room);
+		console.log('users joined:',user,user.mainUser)
 
-	socket.on('joinRoom',({username,room})=>{
+		socket.join(user.room);
 
-		const user=userJoin(socket.id,username,room);
-        socket.join(user.room);
-	socket.emit('message', "Welcome this is chatting!")
+
+	socket.emit('message',formatMessage(botName ,"Welcome this is gaming!"))
 	
-	socket.broadcast.emit('message', 'A user has joined the chat');
+	socket.broadcast.to(user.room).emit('message', formatMessage(botName ,`${user.mainUser,mainUser} has joined the chat`));
 
-	 socket.broadcast.to(user.room).emit('message', `${username} has joined the chat`); //notifies everyone expect user itself io.emit()= to all clients
+	socket.on('joinMatch',({mainUser,secondUser,matchRoom})=>{
 
-    //send userand room info
-    io.to(user.room).emit('roomUsers',{
-        room: user.room,
-        users: getRoomUsers(user.room)
-    });
-    });
+			const userChat = userJoinMatch(mainUser,secondUser,matchRoom)
+			socket.join(userChat.matchRoom)
+			console.log('2 users joined:',userChat)
 
-	socket.on('disconnect', ()=>{
-		io.emit('message', 'A user has left the chat');
+			socket.emit('message',formatMessage(botName ,"Welcome this is one to one gaming(in room)!"))
+	
+			socket.broadcast.emit('message', formatMessage(botName ,`A ${secondUser} has entered in a room`));
+
+			socket.on('gameResponse', (res)=>{
+			const user = getCurrentOnlineUser(socketid);
+				io.to(user.room).emit('message', formatMessage(mainUser,msg));	
+				console.log("backend msg");
+
+
+
+			socket.on('chatMessage', (msg)=>{
+			const user = getCurrentOnlineUser(socketid);
+				io.to(user.matchRoom).emit('message', formatMessage(mainUser,msg));	
+				console.log("backend msg",formatMessage(mainUser ,msg));
+
+	});
+		
+		
 	})
+
+	});
+
+	
+
+
+	
+
+ 
+
+
 
 
  
-	socket.on('chatMessage', (msg)=>{
-		io.emit('message', msg);	
-		console.log("backend msg",msg);
-		
+
+
+
+	socket.on('disconnect', ()=>{
+		io.emit('message', formatMessage(botName ,'A user has left the chat'));
 	})
 
     

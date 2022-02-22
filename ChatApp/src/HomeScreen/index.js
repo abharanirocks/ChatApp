@@ -5,6 +5,8 @@ import CustomButton from '../component/custombutton';
 import { useNavigation } from '@react-navigation/native';
 import {io} from "socket.io-client";
 import styled from '../component/onlinelist';
+import {socket} from '../screens/signin';
+import {useRoute} from '@react-navigation/native';
 
 
 export const Messages = [
@@ -47,14 +49,41 @@ export const Messages = [
 
 export default function OnlineUser() {
 
+    const route = useRoute();
+  console.log("Signin params",route.params)
+     const { mainUser,pswrd } = route.params;
+
   const navigation = useNavigation();
-  const onChatPressed=()=>{
+
+    useEffect(()=>{
+     socket.on('message',(message: string)=>{
+        console.log("index msg to user:",message)
+    })   
+    })
+    const room='commonRoom'
+    const socketid = socket.id;
+    socket.emit('joinRoom',{mainUser,socketid,room});
+       
+
+
+
+  const onChatPressed=(item)=>{
+    console.log('****************',item.userName)
         console.log("online users screen")
-        navigation.navigate('Chat');
+        //join chat room
+       const secondUser=item.userName 
+       const matchRoom = "matchRoom"
+      socket.emit('joinMatch',{mainUser,secondUser,matchRoom})
+        navigation.navigate('Chat',{id:item.id, user:item.userName,});
     
     }
   const [chat,setChat] = useState({message:""});
   const [messages, setMessage] = useState();
+
+
+
+
+
 
   // const socketRef = useRef();
   // socketRef.current = io("http://192.168.43.81:3001");
@@ -66,6 +95,7 @@ export default function OnlineUser() {
         
       <Text style={{fontSize: 40}}>Online Users</Text>
       <CustomButton text={"Chat"} onPress={onChatPressed} type="TERTIARY"/>
+      <Text style={styles.text}>{mainUser}</Text>
 
       {/*<TouchableWithoutFeedback>
       <View>
@@ -94,6 +124,11 @@ export default function OnlineUser() {
             </Card>
           )}
         />
+        {
+              ()=>{
+                console.log('------------------------------',item.userName)
+                navigation.navigate('Chat', {id:item.id, user:item.userName,})
+            }}
         </View>
         </TouchableWithoutFeedback>*/}
 
@@ -110,15 +145,11 @@ export default function OnlineUser() {
           {/*<Image source={{ uri: otherUser.imageUri }} style={styles.avatar}/>*/}
 
           <View style={styled.midContainer} >
-            <Text style={styled.username} onPress={
-              ()=>{
-                console.log('------------------------------',item.userName)
-                navigation.navigate('Chat', {id:item.id, user:item.userName,})
-            }}>{item.userName}</Text>
+            <Text style={styled.username} onPress={()=>onChatPressed(item)}>{item.userName}</Text>
             <Text
               numberOfLines={2}
               style={styled.lastMessage}>
-              textttt
+              In game
             </Text>
           </View>
 

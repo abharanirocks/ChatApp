@@ -13,7 +13,9 @@ const Navigation = () => {
             <Stack.Navigator screenOptions={{headerShown:false}}>
                 
                 <Stack.Screen name="Chat Room" component={SignInScreen}/>
-                <Stack.Screen name="Home" component={HomeScreen}/>
+                <Stack.Screen name="Home" component={HomeScreen}  options={({route})=>({
+                    title:route.params.mainUser,
+                })}/>
                 <Stack.Screen 
                 name="Chat" 
                 component={Chat}

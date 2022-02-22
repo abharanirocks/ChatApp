@@ -5,6 +5,8 @@ import CustomInput from '../component/custominput';
 import CustomButton from '../component/custombutton';
 import { useNavigation } from '@react-navigation/native';
 
+
+
     export const socket =io("http://192.168.43.81:3001");
  
 
@@ -19,9 +21,11 @@ import { useNavigation } from '@react-navigation/native';
 const SignIn = () => {
     const navigation = useNavigation();
     const [username, setUsername]= useState('');
-    const [password, setPassword]= useState('');
+    const [password, setPassword]= useState('1234567');
 
     const {height} = useWindowDimensions();
+
+
 
 
 
@@ -30,11 +34,11 @@ const SignIn = () => {
     // socketRef.current.on('message',message=>{
     //     console.log(message)
     // })
-    useEffect(()=>{
-     socket.on('message',(message: string)=>{
-        console.log("sign in msg to user:",message)
-    })   
-    })
+    // useEffect(()=>{
+    //  socket.on('message',(message: string)=>{
+    //     console.log("sign in msg to user:",message)
+    // })   
+    // })
        
     // const childRef = useRef(null)
     // console.log(childRef.current)
@@ -43,7 +47,8 @@ const SignIn = () => {
 
     const onSignInPressed=async()=>{
         console.log(username,password)
-        navigation.navigate('Home');
+        // navigation.navigate('Home');
+        navigation.navigate('Home',{mainUser:username,password:password});
     
     }
 
@@ -56,7 +61,7 @@ const SignIn = () => {
         value={username} 
         setValue={setUsername}/>
         <CustomInput 
-        placeholder='Room'
+        placeholder='Password'
         value={password}
         setValue={setPassword}
         />
