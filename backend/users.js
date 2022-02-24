@@ -24,14 +24,14 @@ function getCurrentMatchUser(socketid){
 
 
 //user leaves chat
-function userLeaveRoom(id){
-    const index = onlineUsers.findIndex(user => user.id === id);
+function userLeaveRoom(socketid){
+    const index = onlineUsers.findIndex(user => user.socketid === socketid);
     if(index !==-1){
         return onlineUsers.splice(index, 1)[0];
     }
 }
-function userLeaveMatch(id){
-    const index = matchUsers.findIndex(user => user.id === id);
+function userLeaveMatch(socketid){
+    const index = matchUsers.findIndex(user => user.socketid === socketid);
     if(index !==-1){
         return matchUsers.splice(index, 1)[0];
     }
@@ -40,8 +40,8 @@ function userLeaveMatch(id){
 function getRoomUsers(room){
     return onlineUsers.filter(user => user.room== room);
 }
-function getMatchUsers(room){
-    return matchUsers.filter(user => user.room== room);
+function getMatchUsers(matchRoom){
+    return matchUsers.filter(user => user.matchRoom== matchRoom);
 }
  
 module.exports ={

@@ -71,7 +71,11 @@ export default function Chat() {
         />*/}
       <View style={{flex: 1}}>
       {/*<ChatMessage title="green apple" message={params}/>*/}
-      <ChatMessage title="user1" message={message}/>
+      <ChatMessage 
+      title="user1" 
+      message={message} 
+      onMsgSet={(newMessage)=>{setMessage(newMessage)}} 
+      onMsgSend={()=>{console.log('msg submitted')}}/>
       </View>
   
       <View style={styles.inputContainer}>

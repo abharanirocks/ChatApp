@@ -53,16 +53,25 @@ export default function OnlineUser() {
   console.log("Signin params",route.params)
      const { mainUser,pswrd } = route.params;
 
+       const [chat,setChat] = useState({message:""});
+       const [messages, setMessage] = useState();
+
   const navigation = useNavigation();
 
     useEffect(()=>{
      socket.on('message',(message: string)=>{
         console.log("index msg to user:",message)
     })   
-    })
+    },[])
     const room='commonRoom'
     const socketid = socket.id;
     socket.emit('joinRoom',{mainUser,socketid,room});
+
+
+    socket.on('roomUsers',({room,users})=>{
+    console.log("Room users^^^^",room);
+    console.log('total users@@@@',users);
+    })
        
 
 
@@ -77,8 +86,7 @@ export default function OnlineUser() {
         navigation.navigate('Chat',{id:item.id, user:item.userName,});
     
     }
-  const [chat,setChat] = useState({message:""});
-  const [messages, setMessage] = useState();
+
 
 
 
@@ -97,7 +105,57 @@ export default function OnlineUser() {
       <CustomButton text={"Chat"} onPress={onChatPressed} type="TERTIARY"/>
       <Text style={styles.text}>{mainUser}</Text>
 
-      {/*<TouchableWithoutFeedback>
+  
+
+
+         <TouchableWithoutFeedback>
+         <FlatList 
+          style={{width:'100%'}}
+          data={Messages}
+          keyExtractor={item=>item.id}
+          renderItem={({item}) => (
+      <View style={styled.container} >
+        <View style={styled.lefContainer}>
+        <Text>avatar </Text>
+          {/*<Image source={{ uri: otherUser.imageUri }} style={styles.avatar}/>*/}
+
+          <View style={styled.midContainer} >
+            <Text style={styled.username} onPress={()=>onChatPressed(item)}>{item.userName}</Text>
+            {/*<Text
+              numberOfLines={2}
+              style={styled.lastMessage}>
+              In game
+            </Text>*/}
+          </View>
+
+        </View>
+        <Text style={styled.invite}>invite user</Text>
+
+        
+      </View>
+      )}
+        />
+    </TouchableWithoutFeedback>
+      <StatusBar style="auto" />
+    </View>
+  );
+}
+
+const styles = StyleSheet.create({
+  container: {
+    flex: 1,
+    backgroundColor: '#fff',
+    alignItems:'center',
+    padding:75,
+    
+  },
+  text:{
+    fontSize: 30,
+  }
+});
+
+
+    {/*<TouchableWithoutFeedback>
       <View>
       <FlatList 
           
@@ -131,50 +189,3 @@ export default function OnlineUser() {
             }}
         </View>
         </TouchableWithoutFeedback>*/}
-
-
-         <TouchableWithoutFeedback>
-         <FlatList 
-          style={{width:'100%'}}
-          data={Messages}
-          keyExtractor={item=>item.id}
-          renderItem={({item}) => (
-      <View style={styled.container} >
-        <View style={styled.lefContainer}>
-        <Text>avatar </Text>
-          {/*<Image source={{ uri: otherUser.imageUri }} style={styles.avatar}/>*/}
-
-          <View style={styled.midContainer} >
-            <Text style={styled.username} onPress={()=>onChatPressed(item)}>{item.userName}</Text>
-            <Text
-              numberOfLines={2}
-              style={styled.lastMessage}>
-              In game
-            </Text>
-          </View>
-
-        </View>
-        <Text style={styled.invite}>invite user</Text>
-
-        
-      </View>
-      )}
-        />
-    </TouchableWithoutFeedback>
-      <StatusBar style="auto" />
-    </View>
-  );
-}
-
-const styles = StyleSheet.create({
-  container: {
-    flex: 1,
-    backgroundColor: '#fff',
-    alignItems:'center',
-    padding:75,
-    
-  },
-  text:{
-    fontSize: 30,
-  }
-});

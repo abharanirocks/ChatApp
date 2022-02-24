@@ -4,7 +4,7 @@ import { useNavigation } from '@react-navigation/native';
 import moment from 'moment';
 import {data} from '../data/data'
 
-const ChatMessage = (title,message) => {
+const ChatMessage = ({title,message,onMsgSet,onMsgSend}) => {
     
     const isMyMessage =(item)=>{
         return item['user']['id'] === 'u1';
